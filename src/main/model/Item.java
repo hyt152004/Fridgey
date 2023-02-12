@@ -35,9 +35,15 @@ public abstract class Item {
         return ("Expiration Date: " + expirationDay + "/" + expirationMonth + "/" + expirationYear);
     }
 
+    // EFFECTS: returns the number of days left until expiration date
+    public int getDaysLeft() {
+        return 0; //stub
+    }
+
 
     // returns the quantity
-    public abstract int getQuantity();
+    public abstract String getQuantity();
+
 
 
 

@@ -15,7 +15,7 @@ public class Liquid extends Item {
     }
 
     @Override
-    public int getQuantity() {
-        return quantity;
+    public String getQuantity() {
+        return (quantity + "mL");
     }
 }

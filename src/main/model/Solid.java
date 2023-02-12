@@ -15,7 +15,7 @@ public class Solid extends Item {
     }
 
     @Override
-    public int getQuantity() {
-        return quantity;
+    public String getQuantity() {
+        return String.valueOf(quantity);
     }
 }

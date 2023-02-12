@@ -16,9 +16,6 @@ public class FridgeyApp {
     private Scanner input;
     private Refrigerator myFridgey;
 
-    Date myDate = new Date();
-    SimpleDateFormat dateFormat = new SimpleDateFormat("M/dd/Y");
-
     // MODIFIES: this
     // EFFECTS: processes user input
     public void runFridgey() {
@@ -55,10 +52,14 @@ public class FridgeyApp {
             doGetAllItems();
         } else if (command.equals("c")) {
             doRemoveItem();
+        } else if (command.equals("d")) {
+            doSearchAnItem();
         } else {
             System.out.println("Selection not valid...");
         }
+
     }
+
 
     // MODIFIES: this
     // EFFECTS: initializes accounts
@@ -74,18 +75,14 @@ public class FridgeyApp {
         System.out.println("\ta -> add an item");
         System.out.println("\tb -> view all items");
         System.out.println("\tc -> remove an item");
+        System.out.println("\td -> search for an item");
         System.out.println();
     }
 
+    // EFFECTS: performs the addition of a new item
     private void doAddItem() {
-        String commandName;
-        int commandDay;
-        int commandMonth;
-        int commandYear;
-        int commandQuantity;
         boolean liquidState;
         Item i;
-
 
         System.out.println("Is the item in liquid state? (true/false):");
         liquidState = input.nextBoolean();
@@ -102,44 +99,7 @@ public class FridgeyApp {
 
     }
 
-    // EFFECTS: returns the name received from the user
-    private String getItemName() {
-        String commandName;
-        System.out.println("Item Name:");
-        commandName = input.next();
-        commandName = commandName.toLowerCase();
-        return commandName;
-    }
-
-    private int getItemExpirationDay() {
-        int commandDay;
-        System.out.println("Item Expiration Day (DD):");
-        commandDay = input.nextInt();
-        return commandDay;
-    }
-
-    private int getItemExpirationMonth() {
-        int commandMonth;
-        System.out.println("Item Expiration Month (MM):");
-        commandMonth = input.nextInt();
-        return commandMonth;
-    }
-
-    private int getItemExpirationYear() {
-        int commandYear;
-        System.out.println("Item Expiration Year (YYYY):");
-        commandYear = input.nextInt();
-        return commandYear;
-
-    }
-
-    private int getItemQuantity() {
-        int commandQuantity;
-        System.out.println("Item Quantity:");
-        commandQuantity = input.nextInt();
-        return commandQuantity;
-    }
-
+    // EFFECTS: preforms the task of removing an item
     private void doRemoveItem() {
         String commandName;
         System.out.println("Name of the item wanting to remove: ");
@@ -150,7 +110,62 @@ public class FridgeyApp {
         System.out.println(commandName + " has been removed");
     }
 
+    // EFFECTS: preforms the task of presenting all the items
     private void doGetAllItems() {
         myFridgey.getAllItems();
     }
+
+    //EFFECTS: preforms the searching of an item
+    private void doSearchAnItem() {
+        String commandName;
+        System.out.println("Searching item name: ");
+        commandName = input.next();
+        Item i = myFridgey.searchItem(commandName);
+        System.out.println(i.getItemNameWithExpirationDate() + "\nQuantity: " + i.getQuantity());
+    }
+
+
+    // EFFECTS: returns the Name received from the user
+    private String getItemName() {
+        String commandName;
+        System.out.println("Item Name:");
+        commandName = input.next();
+        commandName = commandName.toLowerCase();
+        return commandName;
+    }
+
+    // EFFECTS: returns the ExpirationDay received from the user
+    private int getItemExpirationDay() {
+        int commandDay;
+        System.out.println("Item Expiration Day (DD):");
+        commandDay = input.nextInt();
+        return commandDay;
+    }
+
+    // EFFECTS: returns the ExpirationMonth received from the user
+    private int getItemExpirationMonth() {
+        int commandMonth;
+        System.out.println("Item Expiration Month (MM):");
+        commandMonth = input.nextInt();
+        return commandMonth;
+    }
+
+    // EFFECTS: returns the ExpirationYear received from the user
+    private int getItemExpirationYear() {
+        int commandYear;
+        System.out.println("Item Expiration Year (YYYY):");
+        commandYear = input.nextInt();
+        return commandYear;
+
+    }
+
+    // EFFECTS: returns the Quantity received from the user
+    private int getItemQuantity() {
+        int commandQuantity;
+        System.out.println("Item Quantity:");
+        commandQuantity = input.nextInt();
+        return commandQuantity;
+    }
+
+
 }

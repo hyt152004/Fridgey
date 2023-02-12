@@ -8,7 +8,7 @@ public class Refrigerator {
 
     // EFFECTS: constructs a new ArrayList of Items for your refrigerator
     public Refrigerator() {
-        myItems = new ArrayList<Item>();
+        myItems = new ArrayList<>();
     }
 
     // MODIFIES: this
@@ -36,6 +36,7 @@ public class Refrigerator {
         }
         return null;
     }
+
 
     // EFFECTS: prints out all the item's name
     public void getAllItems() {
