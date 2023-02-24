@@ -14,6 +14,7 @@ public class FridgeyApp {
 
     private Scanner input;
     private Refrigerator myFridgey;
+    private LocalDate today = LocalDate.now();
 
     // MODIFIES: this
     // EFFECTS: processes user input
@@ -21,7 +22,6 @@ public class FridgeyApp {
         boolean keepGoing = true;
         String command = null;
 
-        LocalDate today = LocalDate.now();
 
         System.out.println("\n" + "Today's Date: " + today.getMonth()
                 + " " + today.getDayOfMonth() + ", " + today.getYear());
@@ -42,7 +42,6 @@ public class FridgeyApp {
         System.out.println("\nGoodbye!");
     }
 
-    // MODIFIES: this
     // EFFECTS: processes user command
     private void processCommand(String command) {
         if (command.equals("a")) {
@@ -60,7 +59,7 @@ public class FridgeyApp {
     }
 
     // MODIFIES: this
-    // EFFECTS: initializes accounts
+    // EFFECTS: initializes refrigerator
     private void init() {
         myFridgey = new Refrigerator();
         input = new Scanner(System.in);
@@ -138,7 +137,8 @@ public class FridgeyApp {
         commandName = input.next();
         commandName = commandName.toLowerCase();
         Item i = myFridgey.searchItem(commandName);
-        System.out.println(i.getItemNameWithExpirationDate() + "\nQuantity: " + i.getQuantity());
+        System.out.println(i.getItemNameWithExpirationDate() + "\nQuantity: " + i.getQuantity()
+                + "\nDays Left Until Expiration Date: " + i.getDaysLeft(today));
     }
 
     // EFFECTS: returns the info asked from the user

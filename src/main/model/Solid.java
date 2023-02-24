@@ -7,7 +7,7 @@ public class Solid extends Item {
     protected int quantity;
 
     // REQUIRES: quantity > 0
-    // EFFECTS: constructs a new solid item; quantity is the number of a particular solid
+    // EFFECTS: constructs a new solid item
     public Solid(String itemName, int expirationDay, int expirationMonth,
                  int expirationYear, int quantity) {
         super(itemName, expirationDay, expirationMonth, expirationYear);
@@ -18,4 +18,5 @@ public class Solid extends Item {
     public String getQuantity() {
         return String.valueOf(quantity);
     }
+
 }

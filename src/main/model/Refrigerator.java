@@ -4,11 +4,14 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
+// This class represents the fridge where all the items will be stored
+
 public class Refrigerator {
 
     protected ArrayList<Item> myItems;
 
-    // EFFECTS: constructs a new ArrayList of Items for your refrigerator
+
+    // EFFECTS: constructs a new empty ArrayList of Items for the refrigerator
     public Refrigerator() {
         myItems = new ArrayList<>();
     }
@@ -19,7 +22,7 @@ public class Refrigerator {
         myItems.add(i);
     }
 
-    // REQUIRES: myItems.size() > 0, no duplicates
+    // REQUIRES: myItems.size() > 0, no item duplicates
     // MODIFIES: this
     // EFFECTS: if the given item can be found within myItems, the item is removed and
     //            returns true. Otherwise, return false
@@ -43,7 +46,7 @@ public class Refrigerator {
         return null;
     }
 
-    // EFFECTS: returns all the item's name along with it's expiration date
+    // EFFECTS: returns all the item's name along with its expiration date
     public List<String> getAllItems() {
         List<String> items = new LinkedList<>();
         if (myItems.size() == 0) {
