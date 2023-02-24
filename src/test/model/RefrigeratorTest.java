@@ -4,6 +4,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -49,7 +50,40 @@ public class RefrigeratorTest {
         assertEquals(i1, fridgey.searchItem("Milk"));
     }
 
+
+    @Test
+    public void getAllItemsTestEmpty() {
+        List<String> test = fridgey.getAllItems();
+        assertEquals(1, test.size());
+        assertEquals("The fridge is empty...", test.get(0));
+    }
+
+    @Test
+    public void getAllItemsTestNotEmpty() {
+        fridgey.addItem(i1);
+        fridgey.addItem(i2);
+        List<String> test = fridgey.getAllItems();
+        assertEquals(2, test.size());
+        assertEquals("Milk (Expiration Date: SEPTEMBER 15, 2023)", test.get(0));
+        assertEquals("Apple (Expiration Date: OCTOBER 4, 2002)", test.get(1));
+    }
+
+    @Test
+    public void getSizeEmpty() {
+        assertTrue(checkEmpty(fridgey));
+        assertEquals(0, fridgey.getSize());
+    }
+
+    @Test
+    public void getSizeNotEmpty() {
+        fridgey.addItem(i1);
+        fridgey.addItem(i2);
+        assertEquals(2, fridgey.getSize());
+    }
+
     public boolean checkEmpty(Refrigerator f) {
         return (f.getSize() == 0);
     }
+
+
 }

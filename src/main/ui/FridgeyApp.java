@@ -5,8 +5,7 @@ import model.Liquid;
 import model.Refrigerator;
 import model.Solid;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.Scanner;
 
 // This class is utilized to launch the application
@@ -22,9 +21,10 @@ public class FridgeyApp {
         boolean keepGoing = true;
         String command = null;
 
-        Date myDate = new Date();
-        SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/Y");
-        System.out.println("\n" + "Today's Date: " + dateFormat.format(myDate));
+        LocalDate today = LocalDate.now();
+
+        System.out.println("\n" + "Today's Date: " + today.getMonth()
+                + " " + today.getDayOfMonth() + ", " + today.getYear());
 
         init();
 
@@ -39,7 +39,6 @@ public class FridgeyApp {
                 processCommand(command);
             }
         }
-
         System.out.println("\nGoodbye!");
     }
 
@@ -60,13 +59,11 @@ public class FridgeyApp {
 
     }
 
-
     // MODIFIES: this
     // EFFECTS: initializes accounts
     private void init() {
         myFridgey = new Refrigerator();
         input = new Scanner(System.in);
-        input.useDelimiter("\n");
     }
 
     // EFFECTS: displays menu of options to user
@@ -76,27 +73,38 @@ public class FridgeyApp {
         System.out.println("\tb -> view all items");
         System.out.println("\tc -> remove an item");
         System.out.println("\td -> search for an item");
+        System.out.println("\tq -> quit");
         System.out.println();
     }
 
     // EFFECTS: performs the addition of a new item
     private void doAddItem() {
-        boolean liquidState;
+        String liquidOrSolid;
+        Boolean state;
+
         Item i;
 
-        System.out.println("Is the item in liquid state? (true/false):");
-        liquidState = input.nextBoolean();
+        System.out.println("Item's state? (l (liquid)/ s (solid)):");
+        liquidOrSolid = input.next();
+        liquidOrSolid = liquidOrSolid.toLowerCase();
 
-        if (liquidState) {
-            i = new Liquid(getItemName(), getItemExpirationDay(),
-                    getItemExpirationMonth(), getItemExpirationYear(), getItemQuantity());
+        // true means liquid, false means solid
+        if (liquidOrSolid.equals("l")) {
+            state = true;
         } else {
-            i = new Solid(getItemName(), getItemExpirationDay(),
-                    getItemExpirationMonth(), getItemExpirationYear(), getItemQuantity());
+            state = false;
         }
 
+        if (state) {
+            i = new Liquid(getStringInfo("Item Name: "), getIntInfo("Item Expiration Day (DD):"),
+                    getIntInfo("Item Expiration Month (MM):"),
+                    getIntInfo("Item Expiration Year (YYYY):"), getIntInfo("Item Quantity (in mL):"));
+        } else {
+            i = new Solid(getStringInfo("Item Name: "), getIntInfo("Item Expiration Day (DD):"),
+                    getIntInfo("Item Expiration Month (MM):"),
+                    getIntInfo("Item Expiration Year (YYYY):"), getIntInfo("Item Quantity:"));
+        }
         myFridgey.addItem(i);
-
     }
 
     // EFFECTS: preforms the task of removing an item
@@ -104,6 +112,7 @@ public class FridgeyApp {
         String commandName;
         System.out.println("Name of the item wanting to remove: ");
         commandName = input.next();
+        commandName = commandName.toLowerCase();
 
         Item i = myFridgey.searchItem(commandName);
         myFridgey.removeItem(i);
@@ -112,7 +121,9 @@ public class FridgeyApp {
 
     // EFFECTS: preforms the task of presenting all the items
     private void doGetAllItems() {
-        myFridgey.getAllItems();
+        for (String s : myFridgey.getAllItems()) {
+            System.out.println(s);
+        }
     }
 
     //EFFECTS: preforms the searching of an item
@@ -120,52 +131,25 @@ public class FridgeyApp {
         String commandName;
         System.out.println("Searching item name: ");
         commandName = input.next();
+        commandName = commandName.toLowerCase();
         Item i = myFridgey.searchItem(commandName);
         System.out.println(i.getItemNameWithExpirationDate() + "\nQuantity: " + i.getQuantity());
     }
 
+    // EFFECTS: returns the info asked from the user
+    private int getIntInfo(String command) {
+        int commandName;
+        System.out.println(command);
+        commandName = input.nextInt();
+        return commandName;
+    }
 
-    // EFFECTS: returns the Name received from the user
-    private String getItemName() {
+    // EFFECTS: returns the info asked from the user
+    private String getStringInfo(String command) {
         String commandName;
-        System.out.println("Item Name:");
+        System.out.println(command);
         commandName = input.next();
         commandName = commandName.toLowerCase();
         return commandName;
     }
-
-    // EFFECTS: returns the ExpirationDay received from the user
-    private int getItemExpirationDay() {
-        int commandDay;
-        System.out.println("Item Expiration Day (DD):");
-        commandDay = input.nextInt();
-        return commandDay;
-    }
-
-    // EFFECTS: returns the ExpirationMonth received from the user
-    private int getItemExpirationMonth() {
-        int commandMonth;
-        System.out.println("Item Expiration Month (MM):");
-        commandMonth = input.nextInt();
-        return commandMonth;
-    }
-
-    // EFFECTS: returns the ExpirationYear received from the user
-    private int getItemExpirationYear() {
-        int commandYear;
-        System.out.println("Item Expiration Year (YYYY):");
-        commandYear = input.nextInt();
-        return commandYear;
-
-    }
-
-    // EFFECTS: returns the Quantity received from the user
-    private int getItemQuantity() {
-        int commandQuantity;
-        System.out.println("Item Quantity:");
-        commandQuantity = input.nextInt();
-        return commandQuantity;
-    }
-
-
 }

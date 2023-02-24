@@ -1,6 +1,8 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
 
 public class Refrigerator {
 
@@ -24,6 +26,7 @@ public class Refrigerator {
         if (myItems.contains(i)) {
             myItems.remove(i);
         }
+        // TODO 1: make an action if it doesn't exist
     }
 
     // REQUIRES: must be no duplicate names within myItems
@@ -34,19 +37,22 @@ public class Refrigerator {
                 return i;
             }
         }
+        // TODO 2:  make an action if it doesn't exist
         return null;
     }
 
-
-    // EFFECTS: prints out all the item's name
-    public void getAllItems() {
+    // EFFECTS: returns all the item's name along with it's expiration date
+    public List<String> getAllItems() {
+        List<String> items = new LinkedList<>();
         if (myItems.size() == 0) {
-            System.out.println("The fridge is empty...");
+            items.add("The fridge is empty...");
         } else {
             for (Item i : myItems) {
-                System.out.println(i.getItemNameWithExpirationDate());
+                // TODO: display the quantity?
+                items.add(i.getItemNameWithExpirationDate());
             }
         }
+        return items;
     }
 
     // EFFECTS: returns the number of items in the fridge
