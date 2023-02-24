@@ -19,25 +19,27 @@ public class Refrigerator {
         myItems.add(i);
     }
 
-    // REQUIRES: myItems should not be empty
+    // REQUIRES: myItems.size() > 0, no duplicates
     // MODIFIES: this
-    // EFFECTS: removes the given item from myItems
-    public void removeItem(Item i) {
+    // EFFECTS: if the given item can be found within myItems, the item is removed and
+    //            returns true. Otherwise, return false
+    public boolean removeItem(Item i) {
         if (myItems.contains(i)) {
             myItems.remove(i);
+            return true;
         }
-        // TODO 1: make an action if it doesn't exist
+        return false;
     }
 
     // REQUIRES: must be no duplicate names within myItems
     // EFFECTS: returns the item that matches the given name. If no item exists, return null
     public Item searchItem(String name) {
+        String newName = name.toLowerCase();
         for (Item i : myItems) {
-            if (i.getItemName().equals(name)) {
+            if (i.getItemName().equals(newName)) {
                 return i;
             }
         }
-        // TODO 2:  make an action if it doesn't exist
         return null;
     }
 
@@ -48,7 +50,6 @@ public class Refrigerator {
             items.add("The fridge is empty...");
         } else {
             for (Item i : myItems) {
-                // TODO: display the quantity?
                 items.add(i.getItemNameWithExpirationDate());
             }
         }

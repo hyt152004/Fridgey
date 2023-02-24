@@ -33,11 +33,11 @@ public abstract class Item {
                 + expirationDate.getDayOfMonth() + ", " + expirationDate.getYear());
     }
 
-    // EFFECTS: returns the number of days left until expiration date
-    // TODO: implementation (use the example from testing)
-    public int getDaysLeft() {
-        return 0; //stub
-    }
+//    // EFFECTS: returns the number of days left until expiration date
+//    // TODO: implementation (use the example from testing)
+//    public int getDaysLeft() {
+//        return 0; //stub
+//    }
 
     // returns the quantity
     public abstract String getQuantity();

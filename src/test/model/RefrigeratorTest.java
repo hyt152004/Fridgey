@@ -6,8 +6,7 @@ import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class RefrigeratorTest {
 
@@ -18,10 +17,11 @@ public class RefrigeratorTest {
     @BeforeEach
     public void setUp() {
         fridgey = new Refrigerator();
-        i1 = new Liquid("Milk", 15, 9, 2023, 500);
-        i2 = new Solid("Apple", 4, 10, 2002, 2);
+        i1 = new Liquid("milk", 15, 9, 2023, 500);
+        i2 = new Solid("apple", 4, 10, 2002, 2);
 
     }
+
 
     @Test
     public void addItemTest() {
@@ -34,12 +34,17 @@ public class RefrigeratorTest {
     }
 
     @Test
-    public void removeItemTest() {
+    public void removeItemNotContainTest() {
         fridgey.addItem(i1);
-        fridgey.removeItem(i2);
+        assertFalse(fridgey.removeItem(i2));
         assertEquals(1, fridgey.getSize());
+    }
+
+    @Test
+    public void removeItemContainTest() {
+        fridgey.addItem(i1);
         fridgey.addItem(i2);
-        fridgey.removeItem(i2);
+        assertTrue(fridgey.removeItem(i2));
         assertEquals(1, fridgey.getSize());
     }
 
@@ -48,6 +53,7 @@ public class RefrigeratorTest {
         fridgey.addItem(i1);
         assertEquals(null, fridgey.searchItem("Apple"));
         assertEquals(i1, fridgey.searchItem("Milk"));
+        assertEquals(i1, fridgey.searchItem("milk"));
     }
 
 
@@ -64,8 +70,8 @@ public class RefrigeratorTest {
         fridgey.addItem(i2);
         List<String> test = fridgey.getAllItems();
         assertEquals(2, test.size());
-        assertEquals("Milk (Expiration Date: SEPTEMBER 15, 2023)", test.get(0));
-        assertEquals("Apple (Expiration Date: OCTOBER 4, 2002)", test.get(1));
+        assertEquals("milk (Expiration Date: SEPTEMBER 15, 2023)", test.get(0));
+        assertEquals("apple (Expiration Date: OCTOBER 4, 2002)", test.get(1));
     }
 
     @Test

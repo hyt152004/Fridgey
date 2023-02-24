@@ -115,8 +115,13 @@ public class FridgeyApp {
         commandName = commandName.toLowerCase();
 
         Item i = myFridgey.searchItem(commandName);
-        myFridgey.removeItem(i);
-        System.out.println(commandName + " has been removed");
+        if (myFridgey.removeItem(i)) {
+            myFridgey.removeItem(i);
+            System.out.println(commandName + " has been removed");
+        } else {
+            System.out.println(commandName + " has been found");
+        }
+
     }
 
     // EFFECTS: preforms the task of presenting all the items
