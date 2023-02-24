@@ -3,6 +3,7 @@ package model;
 // This class is an abstract class for all the different states of items that will be stored within the refrigerator
 
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -40,9 +41,9 @@ public abstract class Item {
     //            Today and expirationDate being on the same day is considered passed
     public String getDaysLeft(LocalDate today) {
         if (expirationDate.isAfter(today)) {
-            List<LocalDate> days = today.datesUntil(expirationDate).collect(Collectors.toList());
-            Integer numOfDaysLeft = days.size();
-            return numOfDaysLeft.toString() + " days";
+            long noOfDaysBetween = ChronoUnit.DAYS.between(today, expirationDate);
+            return noOfDaysBetween + " days";
+
         } else {
             return "The expiration date has passed";
         }
