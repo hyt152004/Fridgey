@@ -1,12 +1,16 @@
 package model;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+import persistence.Writable;
+
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
 // This class represents the fridge where all the items will be stored
 
-public class Refrigerator {
+public class Refrigerator implements Writable {
 
     protected ArrayList<Item> myItems;
 
@@ -58,6 +62,25 @@ public class Refrigerator {
         }
         return items;
     }
+
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("Items", thingiesToJson());
+        return json;
+    }
+
+    // EFFECTS: returns things in this workroom as a JSON array
+    private JSONArray thingiesToJson() {
+        JSONArray jsonArray = new JSONArray();
+
+        for (Item t : myItems) {
+            jsonArray.put(t.toJson());
+        }
+
+        return jsonArray;
+    }
+
 
     // EFFECTS: returns the number of items in the fridge
     public int getSize() {

@@ -4,7 +4,11 @@ import model.Item;
 import model.Liquid;
 import model.Refrigerator;
 import model.Solid;
+import persistence.JsonReader;
+import persistence.JsonWriter;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.Scanner;
 
@@ -12,13 +16,18 @@ import java.util.Scanner;
 
 public class FridgeyApp {
 
+    private static final String JSON_STORE = "./data/fridgey.json";
     private Scanner input;
     private Refrigerator myFridgey;
     private LocalDate today = LocalDate.now();
+    private JsonWriter jsonWriter;
+    private JsonReader jsonReader;
 
     // MODIFIES: this
     // EFFECTS: processes user input
     public void runFridgey() {
+        jsonWriter = new JsonWriter(JSON_STORE);
+        jsonReader = new JsonReader(JSON_STORE);
         boolean keepGoing = true;
         String command = null;
 
@@ -52,6 +61,10 @@ public class FridgeyApp {
             doRemoveItem();
         } else if (command.equals("d")) {
             doSearchAnItem();
+        } else if (command.equals("s")) {
+            saveWorkRoom();
+        } else if (command.equals("r")) {
+            loadWorkRoom();
         } else {
             System.out.println("Selection not valid...");
         }
@@ -72,6 +85,8 @@ public class FridgeyApp {
         System.out.println("\tb -> view all items");
         System.out.println("\tc -> remove an item");
         System.out.println("\td -> search for an item");
+        System.out.println("\ts -> to save all the items");
+        System.out.println("\tr -> retrieve all the items");
         System.out.println("\tq -> quit");
         System.out.println();
     }
@@ -88,20 +103,22 @@ public class FridgeyApp {
         liquidOrSolid = liquidOrSolid.toLowerCase();
 
         // true means liquid, false means solid
-        if (liquidOrSolid.equals("l")) {
+        if (liquidOrSolid.equals("s")) {
             state = true;
-        } else {
+        } else if (liquidOrSolid.equals("l")) {
             state = false;
+        } else {
+            return;
         }
 
         if (state) {
-            i = new Liquid(getStringInfo("Item Name: "), getIntInfo("Item Expiration Day (DD):"),
-                    getIntInfo("Item Expiration Month (MM):"),
-                    getIntInfo("Item Expiration Year (YYYY):"), getIntInfo("Item Quantity (in mL):"));
-        } else {
             i = new Solid(getStringInfo("Item Name: "), getIntInfo("Item Expiration Day (DD):"),
                     getIntInfo("Item Expiration Month (MM):"),
-                    getIntInfo("Item Expiration Year (YYYY):"), getIntInfo("Item Quantity:"));
+                    getIntInfo("Item Expiration Year (YYYY):"), getIntInfo("Item Quantity:"), true);
+        } else {
+            i = new Liquid(getStringInfo("Item Name: "), getIntInfo("Item Expiration Day (DD):"),
+                    getIntInfo("Item Expiration Month (MM):"),
+                    getIntInfo("Item Expiration Year (YYYY):"), getIntInfo("Item Quantity (in mL):"), false);
         }
         myFridgey.addItem(i);
     }
@@ -140,6 +157,32 @@ public class FridgeyApp {
         System.out.println(i.getItemNameWithExpirationDate() + "\nQuantity: " + i.getQuantity()
                 + "\nDays Left Until Expiration Date: " + i.getDaysLeft(today));
     }
+
+
+    // EFFECTS: saves the workroom to file
+    private void saveWorkRoom() {
+        try {
+            jsonWriter.open();
+            jsonWriter.write(myFridgey);
+            jsonWriter.close();
+            System.out.println("Saved to " + JSON_STORE);
+        } catch (FileNotFoundException e) {
+            System.out.println("Unable to write to file: " + JSON_STORE);
+        }
+    }
+
+    // MODIFIES: this
+    // EFFECTS: loads workroom from file
+    private void loadWorkRoom() {
+        try {
+            myFridgey = jsonReader.read();
+            System.out.println("Loaded from " + JSON_STORE);
+        } catch (IOException e) {
+            System.out.println("Unable to read from file: " + JSON_STORE);
+        }
+    }
+
+
 
     // EFFECTS: returns the info asked from the user
     private int getIntInfo(String command) {

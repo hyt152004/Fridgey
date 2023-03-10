@@ -29,4 +29,14 @@
 > - As a user, I want to be able to check the quantity of a certain item 
 > - As a user, I want to be view all the items 
 
+
+
+> **Data Persistence**
+> - As a user, I want to be able to save my items to file (if I so choose)
+> - As a user, I want to be able to be able to retrieve all my items from file (if I so choose)
+
+[//]: # (> - As a user, when I select the quit option from the application menu, I want to be reminded to save my items to file and have the option to do so or not. )
+
+[//]: # (> - As a user, when I start the application, I want to be given the option to retrieve my items from file.)
+
 ![poster](images/fridgey.png)

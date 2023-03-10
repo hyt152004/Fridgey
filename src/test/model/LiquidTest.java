@@ -14,7 +14,7 @@ public class LiquidTest {
 
     @BeforeEach
     public void setUp() {
-        liquidItemTest = new Liquid("Banana Milk", 15, 9, 2023, 500);
+        liquidItemTest = new Liquid("Banana Milk", 15, 9, 2023, 500, false);
     }
 
     @Test

@@ -11,7 +11,7 @@ public class SolidTest {
 
     @BeforeEach
     public void setUp() {
-        solidItemTest = new Solid("egg", 15, 9, 2023, 20);
+        solidItemTest = new Solid("egg", 15, 9, 2023, 20, true);
     }
 
     @Test

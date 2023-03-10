@@ -1,0 +1,20 @@
+{"Items": [
+    {
+        "expirationYear": 2024,
+        "expirationDay": 9,
+        "quantity": 99,
+        "name": "milk",
+        "expirationMonth": 9,
+        "daysLeft": "550 days",
+        "state": true
+    },
+    {
+        "expirationYear": 2024,
+        "expirationDay": 7,
+        "quantity": 900,
+        "name": "egg",
+        "expirationMonth": 9,
+        "daysLeft": "548 days",
+        "state": false
+    }
+]}

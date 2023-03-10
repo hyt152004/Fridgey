@@ -17,8 +17,8 @@ public class RefrigeratorTest {
     @BeforeEach
     public void setUp() {
         fridgey = new Refrigerator();
-        i1 = new Liquid("milk", 15, 9, 2023, 500);
-        i2 = new Solid("apple", 4, 10, 2002, 2);
+        i1 = new Liquid("milk", 15, 9, 2023, 500, false);
+        i2 = new Solid("apple", 4, 10, 2002, 2, true );
 
     }
 
