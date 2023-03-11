@@ -3,7 +3,6 @@ package model;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -17,8 +16,8 @@ public class RefrigeratorTest {
     @BeforeEach
     public void setUp() {
         fridgey = new Refrigerator();
-        i1 = new Liquid("milk", 15, 9, 2023, 500, false);
-        i2 = new Solid("apple", 4, 10, 2002, 2, true );
+        i1 = new Liquid("milk", 15, 9, 2023, 500);
+        i2 = new Solid("apple", 4, 10, 2002, 2);
 
     }
 
@@ -59,7 +58,7 @@ public class RefrigeratorTest {
 
     @Test
     public void getAllItemsTestEmpty() {
-        List<String> test = fridgey.getAllItems();
+        List<String> test = fridgey.getAllItemsNameWithExpirationDate();
         assertEquals(1, test.size());
         assertEquals("The fridge is empty...", test.get(0));
     }
@@ -68,7 +67,7 @@ public class RefrigeratorTest {
     public void getAllItemsTestNotEmpty() {
         fridgey.addItem(i1);
         fridgey.addItem(i2);
-        List<String> test = fridgey.getAllItems();
+        List<String> test = fridgey.getAllItemsNameWithExpirationDate();
         assertEquals(2, test.size());
         assertEquals("milk (Expiration Date: SEPTEMBER 15, 2023)", test.get(0));
         assertEquals("apple (Expiration Date: OCTOBER 4, 2002)", test.get(1));

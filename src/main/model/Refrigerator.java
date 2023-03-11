@@ -50,8 +50,13 @@ public class Refrigerator implements Writable {
         return null;
     }
 
+    // EFFECTS: returns all the items
+    public List<Item> getAllItems() {
+        return myItems;
+    }
+
     // EFFECTS: returns all the item's name along with its expiration date
-    public List<String> getAllItems() {
+    public List<String> getAllItemsNameWithExpirationDate() {
         List<String> items = new LinkedList<>();
         if (myItems.size() == 0) {
             items.add("The fridge is empty...");

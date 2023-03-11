@@ -14,7 +14,7 @@ public class Solid extends Item {
     // REQUIRES: quantity > 0
     // EFFECTS: constructs a new solid item
     public Solid(String itemName, int expirationDay, int expirationMonth,
-                 int expirationYear, int quantity, boolean state) {
+                 int expirationYear, int quantity) {
         super(itemName, expirationDay, expirationMonth, expirationYear, true);
         this.quantity = quantity;
     }

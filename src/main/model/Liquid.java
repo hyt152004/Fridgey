@@ -14,7 +14,7 @@ public class Liquid extends Item {
     // REQUIRES: quantity > 0 and is in ml
     // EFFECTS: constructs a new liquid item
     public Liquid(String itemName, int expirationDay, int expirationMonth,
-                  int expirationYear, int quantity, boolean state) {
+                  int expirationYear, int quantity) {
         super(itemName, expirationDay, expirationMonth, expirationYear, false);
         this.quantity = quantity;
     }

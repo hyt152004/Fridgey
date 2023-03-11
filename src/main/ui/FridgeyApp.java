@@ -114,11 +114,11 @@ public class FridgeyApp {
         if (state) {
             i = new Solid(getStringInfo("Item Name: "), getIntInfo("Item Expiration Day (DD):"),
                     getIntInfo("Item Expiration Month (MM):"),
-                    getIntInfo("Item Expiration Year (YYYY):"), getIntInfo("Item Quantity:"), true);
+                    getIntInfo("Item Expiration Year (YYYY):"), getIntInfo("Item Quantity:"));
         } else {
             i = new Liquid(getStringInfo("Item Name: "), getIntInfo("Item Expiration Day (DD):"),
                     getIntInfo("Item Expiration Month (MM):"),
-                    getIntInfo("Item Expiration Year (YYYY):"), getIntInfo("Item Quantity (in mL):"), false);
+                    getIntInfo("Item Expiration Year (YYYY):"), getIntInfo("Item Quantity (in mL):"));
         }
         myFridgey.addItem(i);
     }
@@ -142,7 +142,7 @@ public class FridgeyApp {
 
     // EFFECTS: preforms the task of presenting all the items
     private void doGetAllItems() {
-        for (String s : myFridgey.getAllItems()) {
+        for (String s : myFridgey.getAllItemsNameWithExpirationDate()) {
             System.out.println(s);
         }
     }

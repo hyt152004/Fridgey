@@ -70,9 +70,9 @@ public class JsonReader {
         Integer quantity = jsonObject.getInt("quantity");
         Boolean state = jsonObject.getBoolean("state");
         if (state) {
-            item = new Solid(name, expirationDay,expirationMonth,expirationYear, quantity, true);
+            item = new Solid(name, expirationDay,expirationMonth,expirationYear, quantity);
         } else {
-            item = new Liquid(name, expirationDay,expirationMonth,expirationYear, quantity, false);
+            item = new Liquid(name, expirationDay,expirationMonth,expirationYear, quantity);
         }
         fridgey.addItem(item);
     }
