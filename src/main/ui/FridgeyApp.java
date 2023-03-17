@@ -62,9 +62,9 @@ public class FridgeyApp {
         } else if (command.equals("d")) {
             doSearchAnItem();
         } else if (command.equals("s")) {
-            saveWorkRoom();
+            saveItems();
         } else if (command.equals("r")) {
-            loadWorkRoom();
+            loadItems();
         } else {
             System.out.println("Selection not valid...");
         }
@@ -159,8 +159,8 @@ public class FridgeyApp {
     }
 
 
-    // EFFECTS: saves the workroom to file
-    private void saveWorkRoom() {
+    // EFFECTS: saves the items to file
+    private void saveItems() {
         try {
             jsonWriter.open();
             jsonWriter.write(myFridgey);
@@ -172,8 +172,8 @@ public class FridgeyApp {
     }
 
     // MODIFIES: this
-    // EFFECTS: loads workroom from file
-    private void loadWorkRoom() {
+    // EFFECTS: loads items from file
+    private void loadItems() {
         try {
             myFridgey = jsonReader.read();
             System.out.println("Loaded from " + JSON_STORE);
