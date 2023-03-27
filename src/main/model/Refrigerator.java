@@ -71,12 +71,12 @@ public class Refrigerator implements Writable {
     @Override
     public JSONObject toJson() {
         JSONObject json = new JSONObject();
-        json.put("Items", thingiesToJson());
+        json.put("Items", itemsToJson());
         return json;
     }
 
-    // EFFECTS: returns things in this workroom as a JSON array
-    private JSONArray thingiesToJson() {
+    // EFFECTS: returns items in this Refrigerator as a JSON array
+    private JSONArray itemsToJson() {
         JSONArray jsonArray = new JSONArray();
 
         for (Item t : myItems) {

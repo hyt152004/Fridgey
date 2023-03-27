@@ -7,7 +7,7 @@
 > - Keep track of each item's expiration dates
 > - View each item's quantity
 > - View all the items
-> - Search for a item 
+> - Search for an item 
 
 
 
