@@ -1,35 +1,44 @@
 package ui;
 
+import model.Item;
+import model.Refrigerator;
 import model.Solid;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 
 // GUI class for the Fridgey App
 public class FridgeyAppGUI extends FridgeyApp implements ActionListener {
+
+    private static int addItemTextFieldHorizontalPosition = 200;
 
     private static JPanel panel;
     private static JFrame frame;
 
     private static JLabel addItemLabel;
-    private static JLabel showAddedItemLabel;
     private static JTextField addText;
     private static JButton addButton;
 
+    private static JLabel addItemExpirationLabel;
+    private static JTextField addExpirationMonthText;
+    private static JTextField addExpirationDayText;
+    private static JTextField addExpirationYearText;
+
+    private static JTextField addItemQuantity;
+    private static JTextField addItemState;
+
     private static JLabel removeItemLabel;
-    private static JLabel showRemovedItemLabel;
     private static JTextField removeText;
     private static JButton removeButton;
 
     private static JList displayItems;
-    private static DefaultListModel items;
+    private static DefaultListModel itemsDisplay;
+    private static Refrigerator items;
 
     public static void main(String[] args) {
         FridgeyAppGUI startUp = new FridgeyAppGUI();
@@ -50,12 +59,19 @@ public class FridgeyAppGUI extends FridgeyApp implements ActionListener {
 
         panel.setLayout(null);
 
-        doAddItem();
+        doAddItemName();
 
         doRemoveItem();
 
+        doAddItemExpirationDate();
 
-        items = new DefaultListModel();
+        doAddItemQuantity();
+
+        doAddItemState();
+
+
+        itemsDisplay = new DefaultListModel();
+        items = new Refrigerator();
         try {
             BufferedImage myPicture = ImageIO.read(new File("images/fridgey.png"));
             JLabel picLabel = new JLabel(new ImageIcon(myPicture));
@@ -66,7 +82,7 @@ public class FridgeyAppGUI extends FridgeyApp implements ActionListener {
         }
 
 
-        displayItems = new JList(items);
+        displayItems = new JList(itemsDisplay);
         displayItems.setBounds(700, 400, 100, 200);
         displayItems.setSelectedIndex(3);
         panel.add(displayItems);
@@ -74,25 +90,81 @@ public class FridgeyAppGUI extends FridgeyApp implements ActionListener {
     }
 
     // EFFECTS: creates the label, text box, and button for adding items
-    public void doAddItem() {
+    public void doAddItemName() {
+
         // this is for adding an item
-        addItemLabel = new JLabel("Item Name:");
-        addItemLabel.setBounds(100, 200, 100, 30);
+        addItemLabel = new JLabel("Item Name To Add:");
+        addItemLabel.setBounds(20, 30, 140, 30);
         panel.add(addItemLabel);
 
         addText = new JTextField(20);
-        addText.setBounds(200, 200, 100, 30);
+        addText.setBounds(addItemTextFieldHorizontalPosition, 30, 100, 30);
         panel.add(addText);
 
         addButton = new JButton("Add Item");
-        addButton.setBounds(400, 200, 100, 30);
+        addButton.setBounds(addItemTextFieldHorizontalPosition - 83, 330, 100, 30);
         addButton.addActionListener(new FridgeyAppGUI());
         panel.add(addButton);
 
-        showAddedItemLabel = new JLabel("N/A");
-        showAddedItemLabel.setBounds(100, 400, 100, 30);
-        panel.add(showAddedItemLabel);
     }
+
+    // EFFECTS: Sets up the expiration label and its three text boxes
+    public void doAddItemExpirationDate() {
+        // this is for adding an item
+
+        addItemExpirationLabel = new JLabel("Item Expiration Date:");
+        addItemExpirationLabel.setBounds(20, 90, 180, 30);
+        panel.add(addItemExpirationLabel);
+
+        addExpirationDayText = new JTextField(20);
+        addExpirationDayText.setBounds(addItemTextFieldHorizontalPosition, 90, 100, 30);
+        panel.add(addExpirationDayText);
+
+        addExpirationMonthText = new JTextField(20);
+        addExpirationMonthText.setBounds(addItemTextFieldHorizontalPosition, 120, 100, 30);
+        panel.add(addExpirationMonthText);
+
+        addExpirationYearText = new JTextField(20);
+        addExpirationYearText.setBounds(addItemTextFieldHorizontalPosition, 150, 100, 30);
+        panel.add(addExpirationYearText);
+    }
+
+    // EFFECTS: Sets up the expiration label and its three text boxes
+    public void doAddItemQuantity() {
+        // this is for adding an item
+
+        JLabel addItemQuantityLabel;
+        JLabel addItemQuantityMeasurementLabel;
+
+        addItemQuantityLabel = new JLabel("Item Quantity:");
+        addItemQuantityLabel.setBounds(20, 210, 180, 30);
+        panel.add(addItemQuantityLabel);
+
+        addItemQuantityMeasurementLabel = new JLabel("(mL for Liquids)");
+        addItemQuantityMeasurementLabel.setBounds(addItemTextFieldHorizontalPosition + 110, 210, 180, 30);
+        panel.add(addItemQuantityMeasurementLabel);
+
+        addItemQuantity = new JTextField(20);
+        addItemQuantity.setBounds(addItemTextFieldHorizontalPosition, 210, 100, 30);
+        panel.add(addItemQuantity);
+    }
+
+    // EFFECTS: Sets up the expiration label and its three text boxes
+    public void doAddItemState() {
+        // this is for adding an item
+
+        JLabel addItemStateLabel;
+
+        addItemStateLabel = new JLabel("Solid (true)/ Liquid (false):");
+        addItemStateLabel.setBounds(20, 270, 180, 30);
+        panel.add(addItemStateLabel);
+
+        addItemState = new JTextField(20);
+        addItemState.setBounds(addItemTextFieldHorizontalPosition, 270, 100, 30);
+        panel.add(addItemState);
+    }
+
+
 
     // EFFECTS: creates the label, text box, and button for removing items
     public void doRemoveItem() {
@@ -110,10 +182,6 @@ public class FridgeyAppGUI extends FridgeyApp implements ActionListener {
         removeButton.addActionListener(new FridgeyAppGUI());
         panel.add(removeButton);
 
-        showRemovedItemLabel = new JLabel("N/A");
-        showRemovedItemLabel.setBounds(500, 400, 100, 30);
-        panel.add(showRemovedItemLabel);
-
     }
 
 
@@ -123,12 +191,14 @@ public class FridgeyAppGUI extends FridgeyApp implements ActionListener {
 
         if (e.getSource() == addButton) {
             String name = addText.getText();
-            showAddedItemLabel.setText(name);
-            items.addElement(new Solid(name, 20, 10, 2023,20));
+            items.addItem(new Solid(name, 20, 10, 2023,20));
+            itemsDisplay.addElement(name);
 
         } else if (e.getSource() == removeButton) {
             String name = removeText.getText();
-            showRemovedItemLabel.setText(name);
+            Item tempItem = items.searchItem(name);
+            items.removeItem(tempItem);
+            itemsDisplay.removeElement(name);
         }
 
 
