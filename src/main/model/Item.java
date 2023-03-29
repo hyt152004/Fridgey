@@ -56,7 +56,7 @@ public abstract class Item implements Writable {
             return noOfDaysBetween + " days";
 
         } else {
-            return "The expiration date has passed";
+            return "The Item has Expired";
         }
     }
 

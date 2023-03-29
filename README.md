@@ -29,11 +29,15 @@
 > - As a user, I want to be able to check the quantity of a certain item 
 > - As a user, I want to be view all the items 
 
+> **Instructions for Grader**
+> - You can generate the first required action (adding) related to adding Xs to a Y by filling in the Name, Expiration Date, Quantity, and State text fields and pressing the "Add Item" button.
+> - You can generate the second required action (removing) related to adding Xs to a Y by filling in the Name and pressing the "Remove" button.
+> - You can locate my visual component from the application's background
+> - You can save the state of my application by pressing the "Save" button
+> - You can reload the state of my application by pressing the "Load" button
 
 
-> **Data Persistence**
-> - As a user, I want to be able to save my items to file (if I so choose)
-> - As a user, I want to be able to be able to retrieve all my items from file (if I so choose)
+
 
 [//]: # (> - As a user, when I select the quit option from the application menu, I want to be reminded to save my items to file and have the option to do so or not. )
 
