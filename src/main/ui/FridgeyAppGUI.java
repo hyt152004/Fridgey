@@ -4,7 +4,7 @@ import model.Item;
 import model.Liquid;
 import model.Refrigerator;
 import model.Solid;
-import exceptions.BooleanCheckException;
+import exceptions.StateCheckException;
 import persistence.JsonReader;
 import persistence.JsonWriter;
 
@@ -65,10 +65,10 @@ public class FridgeyAppGUI extends FridgeyApp implements ActionListener {
     }
 
     public void homeScreen() {
-
-
         frame = new JFrame();
         panel = new JPanel();
+        itemsDisplay = new DefaultListModel();
+        items = new Refrigerator();
 
         frame.add(panel);
 
@@ -99,9 +99,12 @@ public class FridgeyAppGUI extends FridgeyApp implements ActionListener {
 
         doPersistence();
 
+        doAddBackground();
 
-        itemsDisplay = new DefaultListModel();
-        items = new Refrigerator();
+        doDisplayItems();
+    }
+
+    private void doAddBackground() {
         try {
             BufferedImage myPicture = ImageIO.read(new File("images/fridgey.png"));
             JLabel picLabel = new JLabel(new ImageIcon(myPicture));
@@ -110,8 +113,11 @@ public class FridgeyAppGUI extends FridgeyApp implements ActionListener {
         } catch (IOException e) {
             System.out.println("IOException caught");
         }
+    }
 
-
+    // MODIFIES: this
+    // EFFECTS: constructs a new JList to display all items
+    private void doDisplayItems() {
         displayItems = new JList(itemsDisplay);
         displayItems.setBounds(20, 400, 290, 350);
         displayItems.setSelectedIndex(6);
@@ -119,8 +125,9 @@ public class FridgeyAppGUI extends FridgeyApp implements ActionListener {
         frame.setVisible(true);
     }
 
+    // MODIFIES: this
     // EFFECTS: creates the label, text box, and button for adding items
-    public void doAddItemName() {
+    private void doAddItemName() {
 
         // this is for adding an item
         JLabel addItemLabel = new JLabel("Item Name To Add:");
@@ -143,8 +150,9 @@ public class FridgeyAppGUI extends FridgeyApp implements ActionListener {
 
     }
 
+    // MODIFIES: this
     // EFFECTS: Sets up the expiration label and its three text boxes
-    public void doAddItemExpirationDate() {
+    private void doAddItemExpirationDate() {
         // this is for adding an item
 
         JLabel addItemExpirationLabel = new JLabel("Item Expiration Date:");
@@ -178,8 +186,9 @@ public class FridgeyAppGUI extends FridgeyApp implements ActionListener {
 
     }
 
+    // MODIFIES: this
     // EFFECTS: Sets up the expiration label and its three text boxes
-    public void doAddItemQuantity() {
+    private void doAddItemQuantity() {
         // this is for adding an item
 
         JLabel addItemQuantityLabel;
@@ -198,8 +207,9 @@ public class FridgeyAppGUI extends FridgeyApp implements ActionListener {
         panel.add(addItemQuantityText);
     }
 
+    // MODIFIES: this
     // EFFECTS: Sets up the expiration label and its three text boxes
-    public void doAddItemState() {
+    private void doAddItemState() {
         // this is for adding an item
 
         JLabel addItemStateLabel;
@@ -214,8 +224,9 @@ public class FridgeyAppGUI extends FridgeyApp implements ActionListener {
     }
 
 
+    // MODIFIES: this
     // EFFECTS: creates the label, text box, and button for removing items
-    public void doRemoveItem() {
+    private void doRemoveItem() {
         // This is for removing an item
         JLabel removeItemLabel = new JLabel("Item Name To Remove:");
         removeItemLabel.setBounds(450, 20, 180, 30);
@@ -232,8 +243,9 @@ public class FridgeyAppGUI extends FridgeyApp implements ActionListener {
 
     }
 
+    // MODIFIES: this
     // EFFECTS: creates the label, text box, and button for searching an item
-    public void doSearchItem() {
+    private void doSearchItem() {
         // This is for searching an item
         JLabel searchItemLabel = new JLabel("Item Name To Search:");
         searchItemLabel.setBounds(450, 120, 180, 30);
@@ -254,7 +266,10 @@ public class FridgeyAppGUI extends FridgeyApp implements ActionListener {
 
     }
 
-    public void doPersistence() {
+
+    // MODIFIES: this
+    // EFFECTS: creates the label, text box, and button for saving and loading items
+    private void doPersistence() {
         saveButton = new JButton("Save Items");
         saveButton.setBounds(745, 720, 120, 30);
         saveButton.addActionListener(new FridgeyAppGUI());
@@ -270,6 +285,7 @@ public class FridgeyAppGUI extends FridgeyApp implements ActionListener {
         panel.add(loadButton);
     }
 
+    // MODIFIES: this
     // EFFECTS: performs the action of addButton and removeButton
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -278,7 +294,7 @@ public class FridgeyAppGUI extends FridgeyApp implements ActionListener {
             try {
                 actionForAddButton();
                 savedLabel.setText("");
-            } catch (BooleanCheckException exception) {
+            } catch (StateCheckException exception) {
                 System.exit(1);
             }
 
@@ -291,38 +307,58 @@ public class FridgeyAppGUI extends FridgeyApp implements ActionListener {
             savedLabel.setText("");
 
         } else if (e.getSource() == searchButton) {
-            String name = searchText.getText().toLowerCase();
-            searchText.setText("");
-            Item i = items.searchItem(name);
-            searchItemInfoLabel.setText("<html>" + i.getItemNameWithExpirationDate() + "<br/>Quantity: " + i.getQuantity()
-                    + "<br/>Days Left Until Expiration Date: " + i.getDaysLeft(today) + "</html>");
+            searchButtonAction();
         } else if (e.getSource() == saveButton) {
-            try {
-                jsonWriter = new JsonWriter(JSON_STORE);
-
-                jsonWriter.open();
-                jsonWriter.write(items);
-                jsonWriter.close();
-                savedLabel.setText("Saved!");
-
-            } catch (FileNotFoundException exception) {
-                savedLabel.setText("Unable to write to file");
-            }
+            saveButtonAction();
         } else if (e.getSource() == loadButton) {
-            try {
-                jsonReader = new JsonReader(JSON_STORE);
-                items = jsonReader.read();
-                for (Item i : items.getAllItems()) {
-                    itemsDisplay.addElement(i.getItemNameWithExpirationDate());
-                }
-            } catch (IOException exception) {
-                System.exit(1);
-            }
+            loadButtonAction();
         }
     }
 
+    // MODIFIES: this
+    // EFFECTS: performs the action when the search button is pressed
+    private void searchButtonAction() {
+        String name = searchText.getText().toLowerCase();
+        searchText.setText("");
+        Item i = items.searchItem(name);
+        searchItemInfoLabel.setText("<html>" + i.getItemNameWithExpirationDate() + "<br/>Quantity: " + i.getQuantity()
+                + "<br/>Days Left Until Expiration Date: " + i.getDaysLeft(today) + "</html>");
+    }
+
+    // MODIFIES: this
+    // EFFECTS: performs the action when the save button is pressed
+    private void saveButtonAction() {
+        try {
+            jsonWriter = new JsonWriter(JSON_STORE);
+
+            jsonWriter.open();
+            jsonWriter.write(items);
+            jsonWriter.close();
+            savedLabel.setText("Saved!");
+
+        } catch (FileNotFoundException exception) {
+            savedLabel.setText("Unable to write to file");
+        }
+    }
+
+    // MODIFIES: this
+    // EFFECTS: performs the action when the load button is pressed
+    private void loadButtonAction() {
+        try {
+            jsonReader = new JsonReader(JSON_STORE);
+            items = jsonReader.read();
+            for (Item i : items.getAllItems()) {
+                itemsDisplay.addElement(i.getItemNameWithExpirationDate());
+            }
+        } catch (IOException exception) {
+            System.exit(1);
+        }
+    }
+
+    // MODIFIES: this
     // EFFECTS: handles the action when the add button is pressed
-    public void actionForAddButton() throws BooleanCheckException {
+    @SuppressWarnings("methodlength")
+    private void actionForAddButton() throws StateCheckException {
         int expDay;
         int expMonth;
         int expYear;
@@ -342,28 +378,35 @@ public class FridgeyAppGUI extends FridgeyApp implements ActionListener {
             } else if (state.equals("l")) {
                 currentItem = new Liquid(name, expDay, expMonth, expYear, quantity);
             } else {
-                throw new BooleanCheckException();
+                throw new StateCheckException();
             }
 
             items.addItem(currentItem);
             itemsDisplay.addElement(currentItem.getItemNameWithExpirationDate());
 
-            addItemNameText.setText("");
-            addItemStateText.setText("");
-            addItemQuantityText.setText("");
-            addExpirationDayText.setText("");
-            addExpirationMonthText.setText("");
-            addExpirationYearText.setText("");
-            addItemQuantityText.setText("");
-            errorLabel.setText("");
+            addButtonActionResetAllTextFields();
 
         } catch (NumberFormatException exception) {
             errorLabel.setText("Invalid Input, Please Try Again");
-        } catch (BooleanCheckException exception) {
+        } catch (StateCheckException exception) {
             errorLabel.setText("Invalid State, Please Try Again");
         } catch (DateTimeException exception) {
             errorLabel.setText("Invalid Date, Please Try Again");
         }
+    }
+
+
+    // MODIFIES: this
+    // EFFECTS: sets all the text fields used when adding an item to blank
+    private void addButtonActionResetAllTextFields() {
+        addItemNameText.setText("");
+        addItemStateText.setText("");
+        addItemQuantityText.setText("");
+        addExpirationDayText.setText("");
+        addExpirationMonthText.setText("");
+        addExpirationYearText.setText("");
+        addItemQuantityText.setText("");
+        errorLabel.setText("");
     }
 
 }
