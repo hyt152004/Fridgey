@@ -32,11 +32,6 @@ public class Solid extends Item {
         return json;
     }
 
-    @Override
-    public String toString() {
-        return name + ", " + getExpirationDate();
-    }
-
 
     @Override
     public String getQuantity() {

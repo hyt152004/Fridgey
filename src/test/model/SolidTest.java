@@ -21,4 +21,5 @@ public class SolidTest {
         assertEquals("Expiration Date: SEPTEMBER 15, 2023", solidItemTest.getExpirationDate());
         assertEquals("20", solidItemTest.getQuantity());
     }
+
 }

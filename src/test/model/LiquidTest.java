@@ -28,13 +28,13 @@ public class LiquidTest {
     @Test
     public void getDaysLeftExpirationDatePassedTest() {
         LocalDate date1 = LocalDate.of(2023, 10, 22);
-        assertEquals("The expiration date has passed", liquidItemTest.getDaysLeft(date1));
+        assertEquals("The Item has Expired", liquidItemTest.getDaysLeft(date1));
     }
 
     @Test
     public void getDaysLeftSameDateTest() {
         LocalDate date1 = LocalDate.of(2023, 9, 15);
-        assertEquals("The expiration date has passed", liquidItemTest.getDaysLeft(date1));
+        assertEquals("The Item has Expired", liquidItemTest.getDaysLeft(date1));
     }
 
     @Test
