@@ -291,12 +291,8 @@ public class FridgeyAppGUI extends FridgeyApp implements ActionListener {
     public void actionPerformed(ActionEvent e) {
 
         if (e.getSource() == addButton) {
-            try {
-                actionForAddButton();
-                savedLabel.setText("");
-            } catch (StateCheckException exception) {
-                System.exit(1);
-            }
+            actionForAddButton();
+            savedLabel.setText("");
 
         } else if (e.getSource() == removeButton) {
             String name = removeText.getText().toLowerCase();
@@ -358,7 +354,7 @@ public class FridgeyAppGUI extends FridgeyApp implements ActionListener {
     // MODIFIES: this
     // EFFECTS: handles the action when the add button is pressed
     @SuppressWarnings("methodlength")
-    private void actionForAddButton() throws StateCheckException {
+    private void actionForAddButton() throws NumberFormatException {
         int expDay;
         int expMonth;
         int expYear;
@@ -378,7 +374,7 @@ public class FridgeyAppGUI extends FridgeyApp implements ActionListener {
             } else if (state.equals("l")) {
                 currentItem = new Liquid(name, expDay, expMonth, expYear, quantity);
             } else {
-                throw new StateCheckException();
+                throw new NumberFormatException();
             }
 
             items.addItem(currentItem);
@@ -388,8 +384,6 @@ public class FridgeyAppGUI extends FridgeyApp implements ActionListener {
 
         } catch (NumberFormatException exception) {
             errorLabel.setText("Invalid Input, Please Try Again");
-        } catch (StateCheckException exception) {
-            errorLabel.setText("Invalid State, Please Try Again");
         } catch (DateTimeException exception) {
             errorLabel.setText("Invalid Date, Please Try Again");
         }
