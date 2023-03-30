@@ -4,7 +4,6 @@ import model.Item;
 import model.Liquid;
 import model.Refrigerator;
 import model.Solid;
-import exceptions.StateCheckException;
 import persistence.JsonReader;
 import persistence.JsonWriter;
 
@@ -26,7 +25,7 @@ public class FridgeyAppGUI extends FridgeyApp implements ActionListener {
     private JsonWriter jsonWriter;
     private JsonReader jsonReader;
 
-    private static int addItemTextFieldHorizontalPosition = 200;
+    private static final int ADD_ITEM_TEXT_FIELD_HORIZONTAL_POSITION = 200;
     private LocalDate today = LocalDate.now();
 
     private static JPanel panel;
@@ -136,16 +135,16 @@ public class FridgeyAppGUI extends FridgeyApp implements ActionListener {
 
 
         addItemNameText = new JTextField(20);
-        addItemNameText.setBounds(addItemTextFieldHorizontalPosition, 30, 100, 30);
+        addItemNameText.setBounds(ADD_ITEM_TEXT_FIELD_HORIZONTAL_POSITION, 30, 100, 30);
         panel.add(addItemNameText);
 
         addButton = new JButton("Add Item");
-        addButton.setBounds(addItemTextFieldHorizontalPosition - 83, 330, 100, 30);
+        addButton.setBounds(ADD_ITEM_TEXT_FIELD_HORIZONTAL_POSITION - 83, 330, 100, 30);
         addButton.addActionListener(new FridgeyAppGUI());
         panel.add(addButton);
 
         errorLabel = new JLabel("");
-        errorLabel.setBounds(addItemTextFieldHorizontalPosition - 123, 300, 260, 30);
+        errorLabel.setBounds(ADD_ITEM_TEXT_FIELD_HORIZONTAL_POSITION - 123, 300, 260, 30);
         panel.add(errorLabel);
 
     }
@@ -160,27 +159,27 @@ public class FridgeyAppGUI extends FridgeyApp implements ActionListener {
         panel.add(addItemExpirationLabel);
 
         addExpirationDayText = new JTextField(20);
-        addExpirationDayText.setBounds(addItemTextFieldHorizontalPosition, 90, 100, 30);
+        addExpirationDayText.setBounds(ADD_ITEM_TEXT_FIELD_HORIZONTAL_POSITION, 90, 100, 30);
         panel.add(addExpirationDayText);
 
         JLabel addExpirationDayLabel = new JLabel("Day");
-        addExpirationDayLabel.setBounds(addItemTextFieldHorizontalPosition + 110, 90, 180, 30);
+        addExpirationDayLabel.setBounds(ADD_ITEM_TEXT_FIELD_HORIZONTAL_POSITION + 110, 90, 180, 30);
         panel.add(addExpirationDayLabel);
 
         addExpirationMonthText = new JTextField(20);
-        addExpirationMonthText.setBounds(addItemTextFieldHorizontalPosition, 120, 100, 30);
+        addExpirationMonthText.setBounds(ADD_ITEM_TEXT_FIELD_HORIZONTAL_POSITION, 120, 100, 30);
         panel.add(addExpirationMonthText);
 
         JLabel addExpirationMonthLabel = new JLabel("Month");
-        addExpirationMonthLabel.setBounds(addItemTextFieldHorizontalPosition + 110, 120, 180, 30);
+        addExpirationMonthLabel.setBounds(ADD_ITEM_TEXT_FIELD_HORIZONTAL_POSITION + 110, 120, 180, 30);
         panel.add(addExpirationMonthLabel);
 
         addExpirationYearText = new JTextField(20);
-        addExpirationYearText.setBounds(addItemTextFieldHorizontalPosition, 150, 100, 30);
+        addExpirationYearText.setBounds(ADD_ITEM_TEXT_FIELD_HORIZONTAL_POSITION, 150, 100, 30);
         panel.add(addExpirationYearText);
 
         JLabel addExpirationYearLabel = new JLabel("Year");
-        addExpirationYearLabel.setBounds(addItemTextFieldHorizontalPosition + 110, 150, 180, 30);
+        addExpirationYearLabel.setBounds(ADD_ITEM_TEXT_FIELD_HORIZONTAL_POSITION + 110, 150, 180, 30);
         panel.add(addExpirationYearLabel);
 
 
@@ -199,11 +198,11 @@ public class FridgeyAppGUI extends FridgeyApp implements ActionListener {
         panel.add(addItemQuantityLabel);
 
         addItemQuantityMeasurementLabel = new JLabel("(mL for Liquids)");
-        addItemQuantityMeasurementLabel.setBounds(addItemTextFieldHorizontalPosition + 110, 210, 180, 30);
+        addItemQuantityMeasurementLabel.setBounds(ADD_ITEM_TEXT_FIELD_HORIZONTAL_POSITION + 110, 210, 180, 30);
         panel.add(addItemQuantityMeasurementLabel);
 
         addItemQuantityText = new JTextField(20);
-        addItemQuantityText.setBounds(addItemTextFieldHorizontalPosition, 210, 100, 30);
+        addItemQuantityText.setBounds(ADD_ITEM_TEXT_FIELD_HORIZONTAL_POSITION, 210, 100, 30);
         panel.add(addItemQuantityText);
     }
 
@@ -219,7 +218,7 @@ public class FridgeyAppGUI extends FridgeyApp implements ActionListener {
         panel.add(addItemStateLabel);
 
         addItemStateText = new JTextField(20);
-        addItemStateText.setBounds(addItemTextFieldHorizontalPosition, 270, 100, 30);
+        addItemStateText.setBounds(ADD_ITEM_TEXT_FIELD_HORIZONTAL_POSITION, 270, 100, 30);
         panel.add(addItemStateText);
     }
 
@@ -353,31 +352,11 @@ public class FridgeyAppGUI extends FridgeyApp implements ActionListener {
 
     // MODIFIES: this
     // EFFECTS: handles the action when the add button is pressed
-    @SuppressWarnings("methodlength")
     private void actionForAddButton() throws NumberFormatException {
-        int expDay;
-        int expMonth;
-        int expYear;
-        int quantity;
         Item currentItem;
 
         try {
-            String name = addItemNameText.getText().toLowerCase();
-            String state = addItemStateText.getText().toLowerCase();
-            expDay = Integer.parseInt(addExpirationDayText.getText());
-            expMonth = Integer.parseInt(addExpirationMonthText.getText());
-            expYear = Integer.parseInt(addExpirationYearText.getText());
-            quantity = Integer.parseInt(addItemQuantityText.getText());
-
-            if (state.equals("s")) {
-                currentItem = new Solid(name, expDay, expMonth, expYear, quantity);
-            } else if (state.equals("l")) {
-                currentItem = new Liquid(name, expDay, expMonth, expYear, quantity);
-            } else {
-                throw new NumberFormatException();
-            }
-
-            items.addItem(currentItem);
+            currentItem = constructItemWithGivenInfo();
             itemsDisplay.addElement(currentItem.getItemNameWithExpirationDate());
 
             addButtonActionResetAllTextFields();
@@ -387,6 +366,32 @@ public class FridgeyAppGUI extends FridgeyApp implements ActionListener {
         } catch (DateTimeException exception) {
             errorLabel.setText("Invalid Date, Please Try Again");
         }
+    }
+
+    // EFFECTS: constructs a new item with the info given from the Text fields
+    private Item constructItemWithGivenInfo() {
+        int expMonth;
+        Item currentItem;
+        int expYear;
+        int quantity;
+        int expDay;
+        String name = addItemNameText.getText().toLowerCase();
+        String state = addItemStateText.getText().toLowerCase();
+        expDay = Integer.parseInt(addExpirationDayText.getText());
+        expMonth = Integer.parseInt(addExpirationMonthText.getText());
+        expYear = Integer.parseInt(addExpirationYearText.getText());
+        quantity = Integer.parseInt(addItemQuantityText.getText());
+
+        if (state.equals("s")) {
+            currentItem = new Solid(name, expDay, expMonth, expYear, quantity);
+        } else if (state.equals("l")) {
+            currentItem = new Liquid(name, expDay, expMonth, expYear, quantity);
+        } else {
+            throw new NumberFormatException();
+        }
+
+        items.addItem(currentItem);
+        return currentItem;
     }
 
 
