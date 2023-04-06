@@ -11,12 +11,16 @@ import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.time.DateTimeException;
 import java.time.LocalDate;
+
+import static com.sun.java.accessibility.util.AWTEventMonitor.addWindowListener;
 
 // GUI class for the Fridgey App
 public class FridgeyAppGUI extends FridgeyApp implements ActionListener {
@@ -58,11 +62,16 @@ public class FridgeyAppGUI extends FridgeyApp implements ActionListener {
     private static JLabel savedLabel;
     private static JButton loadButton;
 
+
     public static void main(String[] args) {
         FridgeyAppGUI startUp = new FridgeyAppGUI();
         startUp.homeScreen();
+
     }
 
+
+    // MODIFIES: this
+    // EFFECTS: preforms the entire operation of building all the physical attributes
     public void homeScreen() {
         frame = new JFrame();
         panel = new JPanel();
@@ -74,7 +83,7 @@ public class FridgeyAppGUI extends FridgeyApp implements ActionListener {
         // to make the window pop out
         frame.setSize(1000, 800); // sets the dimensions of the frame
         frame.setResizable(false);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // exit out of application
+        frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         frame.setTitle("Fridgey"); /// sets title to frame
 
         panel.setLayout(null);
@@ -101,8 +110,12 @@ public class FridgeyAppGUI extends FridgeyApp implements ActionListener {
         doAddBackground();
 
         doDisplayItems();
+
+        addWindowListener(new WindowHandler());
     }
 
+    // MODIFIES: this
+    // EFFECTS: constructs a new background image to display the logo
     private void doAddBackground() {
         try {
             BufferedImage myPicture = ImageIO.read(new File("images/fridgey.png"));
@@ -296,7 +309,7 @@ public class FridgeyAppGUI extends FridgeyApp implements ActionListener {
         } else if (e.getSource() == removeButton) {
             String name = removeText.getText().toLowerCase();
             removeText.setText("");
-            Item tempItem = items.searchItem(name);
+            Item tempItem = items.searchItemNoLogEvent(name);
             items.removeItem(tempItem);
             itemsDisplay.removeElement(tempItem.getItemNameWithExpirationDate());
             savedLabel.setText("");
@@ -408,4 +421,41 @@ public class FridgeyAppGUI extends FridgeyApp implements ActionListener {
         errorLabel.setText("");
     }
 
+    private class WindowHandler implements WindowListener {
+
+        @Override
+        public void windowOpened(WindowEvent e) {
+            System.out.println("Hello");
+        }
+
+        @Override
+        public void windowClosing(WindowEvent e) {
+            System.out.println("Hello");
+        }
+
+        @Override
+        public void windowClosed(WindowEvent e) {
+            System.out.println("Hello");
+        }
+
+        @Override
+        public void windowIconified(WindowEvent e) {
+
+        }
+
+        @Override
+        public void windowDeiconified(WindowEvent e) {
+            System.out.println("Hello");
+        }
+
+        @Override
+        public void windowActivated(WindowEvent e) {
+            System.out.println("Hello");
+        }
+
+        @Override
+        public void windowDeactivated(WindowEvent e) {
+            System.out.println("Hello");
+        }
+    }
 }

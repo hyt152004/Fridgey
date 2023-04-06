@@ -24,6 +24,9 @@ public class Refrigerator implements Writable {
     // EFFECTS: adds the given item to myItems
     public void addItem(Item i) {
         myItems.add(i);
+        EventLog.getInstance().logEvent(new Event("An Item has been added"));
+        //TODO: delete this
+        System.out.println("An Item has been added");
     }
 
     // REQUIRES: myItems.size() > 0, no item duplicates
@@ -33,6 +36,9 @@ public class Refrigerator implements Writable {
     public boolean removeItem(Item i) {
         if (myItems.contains(i)) {
             myItems.remove(i);
+            //TODO: delete this
+            System.out.println("An Item has been removed");
+            EventLog.getInstance().logEvent(new Event("An Item has been removed"));
             return true;
         }
         return false;
@@ -40,14 +46,22 @@ public class Refrigerator implements Writable {
 
     // REQUIRES: must be no duplicate names within myItems
     // EFFECTS: returns the item that matches the given name. If no item exists, return null
-    public Item searchItem(String name) {
+    public Item searchItemNoLogEvent(String name) {
         String newName = name.toLowerCase();
         for (Item i : myItems) {
             if (i.getItemName().equals(newName)) {
+
                 return i;
             }
         }
         return null;
+    }
+
+    public Item searchItem(String name) {
+        //TODO: delete this
+        System.out.println("An Item has been searched and returned");
+        EventLog.getInstance().logEvent(new Event("An Item has been searched and returned"));
+        return searchItemNoLogEvent(name);
     }
 
     // EFFECTS: returns all the items

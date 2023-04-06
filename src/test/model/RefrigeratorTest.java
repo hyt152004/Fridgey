@@ -55,6 +55,14 @@ public class RefrigeratorTest {
         assertEquals(i1, fridgey.searchItem("milk"));
     }
 
+    @Test
+    public void searchItemNoLogEventTest() {
+        fridgey.addItem(i1);
+        assertEquals(null, fridgey.searchItemNoLogEvent("Apple"));
+        assertEquals(i1, fridgey.searchItemNoLogEvent("Milk"));
+        assertEquals(i1, fridgey.searchItemNoLogEvent("milk"));
+    }
+
 
     @Test
     public void getAllItemsTestEmpty() {
