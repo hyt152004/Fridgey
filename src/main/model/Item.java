@@ -61,7 +61,6 @@ public abstract class Item implements Writable {
     }
 
 
-
     // EFFECTS: returns the quantity
     public abstract String getQuantity();
 

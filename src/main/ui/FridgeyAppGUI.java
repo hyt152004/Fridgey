@@ -1,18 +1,12 @@
 package ui;
 
-import model.Item;
-import model.Liquid;
-import model.Refrigerator;
-import model.Solid;
+import model.*;
 import persistence.JsonReader;
 import persistence.JsonWriter;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.WindowEvent;
-import java.awt.event.WindowListener;
+import java.awt.event.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -78,12 +72,14 @@ public class FridgeyAppGUI extends FridgeyApp implements ActionListener {
         itemsDisplay = new DefaultListModel();
         items = new Refrigerator();
 
+        frame.addWindowListener(new CloseTheWindow());
+
         frame.add(panel);
 
         // to make the window pop out
         frame.setSize(1000, 800); // sets the dimensions of the frame
         frame.setResizable(false);
-        frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+//        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setTitle("Fridgey"); /// sets title to frame
 
         panel.setLayout(null);
@@ -111,7 +107,7 @@ public class FridgeyAppGUI extends FridgeyApp implements ActionListener {
 
         doDisplayItems();
 
-        addWindowListener(new WindowHandler());
+
     }
 
     // MODIFIES: this
@@ -309,7 +305,7 @@ public class FridgeyAppGUI extends FridgeyApp implements ActionListener {
         } else if (e.getSource() == removeButton) {
             String name = removeText.getText().toLowerCase();
             removeText.setText("");
-            Item tempItem = items.searchItemNoLogEvent(name);
+            Item tempItem = items.searchItem(name);
             items.removeItem(tempItem);
             itemsDisplay.removeElement(tempItem.getItemNameWithExpirationDate());
             savedLabel.setText("");
@@ -421,41 +417,14 @@ public class FridgeyAppGUI extends FridgeyApp implements ActionListener {
         errorLabel.setText("");
     }
 
-    private class WindowHandler implements WindowListener {
-
-        @Override
-        public void windowOpened(WindowEvent e) {
-            System.out.println("Hello");
-        }
-
-        @Override
+    private class CloseTheWindow extends WindowAdapter {
         public void windowClosing(WindowEvent e) {
-            System.out.println("Hello");
-        }
+            for (Event event : EventLog.getInstance()) {
+                System.out.println(event.getDescription());
+            }
 
-        @Override
-        public void windowClosed(WindowEvent e) {
-            System.out.println("Hello");
-        }
-
-        @Override
-        public void windowIconified(WindowEvent e) {
-
-        }
-
-        @Override
-        public void windowDeiconified(WindowEvent e) {
-            System.out.println("Hello");
-        }
-
-        @Override
-        public void windowActivated(WindowEvent e) {
-            System.out.println("Hello");
-        }
-
-        @Override
-        public void windowDeactivated(WindowEvent e) {
-            System.out.println("Hello");
+            System.exit(0);
         }
     }
+
 }

@@ -36,6 +36,13 @@
 > - You can save the state of my application by pressing the "Save" button
 > - You can reload the state of my application by pressing the "Load" button
 
+> **Phase 4: Task 2**
+> - An Item has been added
+> - An Item has been searched and returned 
+> - An Item has been searched and returned 
+> - An Item has been removed
+
+
 
 
 
