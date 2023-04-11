@@ -17,7 +17,7 @@ import java.time.LocalDate;
 import static com.sun.java.accessibility.util.AWTEventMonitor.addWindowListener;
 
 // GUI class for the Fridgey App
-public class FridgeyAppGUI extends FridgeyApp implements ActionListener {
+public class FridgeyAppGUI implements ActionListener {
 
     private static final String JSON_STORE = "./data/fridgeyGUI.json";
     private JsonWriter jsonWriter;

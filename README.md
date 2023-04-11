@@ -42,8 +42,13 @@
 > - An Item has been searched and returned 
 > - An Item has been removed
 
-
-
+> **Phase 4: Task 3**
+> - After reflecting on my UML class diagram, implementing the Singleton Pattern crossed my mind. This procedure will ensure that only one instance of the Refrigerator class would be instantiated across the entire program
+and all objects would access the same single instance. By eliminating multiple instances and avoiding any possible inconsistencies of the Refrigerator state,
+it would simplify my program design and will reduce memory usage and, therefore, runtime.
+> - Although applying this pattern would bring benefit to my program, it may also cause certain problems. Firstly, 
+if I wanted to have a refrigerator and a freezer in my program, instantiating two Refrigerator class may be necessary. Also, testing can become difficult with the implementation of this pattern
+since the singleton object is shared across the entire program. Changing its state for testing can affect other parts of the program, creating difficulty to write independent tests.
 
 
 [//]: # (> - As a user, when I select the quit option from the application menu, I want to be reminded to save my items to file and have the option to do so or not. )
