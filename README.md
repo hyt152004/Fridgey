@@ -39,7 +39,7 @@
 > **Phase 4: Task 2**
 > - An Item has been added
 > - An Item has been searched and returned 
-> - An Item has been searched and returned 
+> - An Item has been searched and returned  
 > - An Item has been removed
 
 > **Phase 4: Task 3**
