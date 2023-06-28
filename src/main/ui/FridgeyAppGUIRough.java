@@ -75,7 +75,7 @@ public class FridgeyAppGUIRough implements ActionListener {
         frame.add(panel);
 
         // to make the window pop out
-        frame.setSize(480, 650); // sets the dimensions of the frame
+        frame.setSize(600, 700); // sets the dimensions of the frame
         frame.setResizable(false);
 //        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setTitle("Fridgey"); /// sets title to frame

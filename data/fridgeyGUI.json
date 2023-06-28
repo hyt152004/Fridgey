@@ -1,29 +1,9 @@
-{"Items": [
-    {
-        "expirationYear": 2024,
-        "expirationDay": 1,
-        "quantity": 12,
-        "name": "a",
-        "expirationMonth": 1,
-        "daysLeft": "273 days",
-        "state": false
-    },
-    {
-        "expirationYear": 2024,
-        "expirationDay": 1,
-        "quantity": 2,
-        "name": "asd",
-        "expirationMonth": 2,
-        "daysLeft": "304 days",
-        "state": true
-    },
-    {
-        "expirationYear": 2022,
-        "expirationDay": 2,
-        "quantity": 2,
-        "name": "aa",
-        "expirationMonth": 12,
-        "daysLeft": "The Item has Expired",
-        "state": true
-    }
-]}
+{"Items": [{
+    "expirationYear": 2023,
+    "expirationDay": 15,
+    "quantity": 40,
+    "name": "banana",
+    "expirationMonth": 9,
+    "daysLeft": "80 days",
+    "state": true
+}]}
