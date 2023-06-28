@@ -1,9 +1,1 @@
-{"Items": [{
-    "expirationYear": 2023,
-    "expirationDay": 15,
-    "quantity": 40,
-    "name": "banana",
-    "expirationMonth": 9,
-    "daysLeft": "80 days",
-    "state": true
-}]}
+{"Items": []}

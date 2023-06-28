@@ -7,11 +7,14 @@ import model.Solid;
 import persistence.JsonReader;
 import persistence.JsonWriter;
 
+import javax.imageio.ImageIO;
 import javax.swing.SwingUtilities;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.time.DateTimeException;
@@ -29,6 +32,10 @@ public class FridgeyAppGUI {
     private final JFrame frame = new JFrame("Fridgey");
     private final JPanel panelCont = new JPanel();
     private final JPanel homePanel = new JPanel();
+    private final JButton homeToMainButton = new JButton("Navigate to my Fridgey!");
+
+    // main screen
+    private final JPanel mainPanel = new JPanel();
     private final JButton addButton = new JButton("Add (+)");
     private final JButton removeButton = new JButton("Remove (-)");
     private final JButton homeButton = new JButton("Home ⌂");
@@ -68,17 +75,30 @@ public class FridgeyAppGUI {
     private final JButton backButton = new JButton("Back");
     private final JLabel errorLabel = new JLabel("");
 
+    // remove screen
+    private final JPanel removePanel = new JPanel();
+    private final JButton removePanelBackButton = new JButton("Back");
+    private final JTextField removingItemName = new JTextField();
+    private final JButton removingItemButton = new JButton("Remove");
+    private final JLabel removingItemErrorLabel = new JLabel();
+    private final JLabel removingItemHeaderLabel = new JLabel("Item to be removed");
+
+
     // EFFECTS: Sets the layout of all the panels
     public FridgeyAppGUI() {
         panelCont.setLayout(cl);
 
-        panelCont.add(homePanel, "1");
+        panelCont.add(mainPanel, "1");
         panelCont.add(addPanel, "2");
+        panelCont.add(removePanel, "3");
+        panelCont.add(homePanel, "4");
 
-        cl.show(panelCont, "1");
+        cl.show(panelCont, "4");
 
         setHomePanel();
+        setMainPanel();
         setAddPanel();
+        setRemovePanel();
         actionPerformed();
 
         frame.add(panelCont);
@@ -91,51 +111,79 @@ public class FridgeyAppGUI {
     // EFFECTS: sets the home screen
     private void setHomePanel() {
         homePanel.setLayout(null);
-        homePanel.setBackground(new Color(245, 142, 53));
+        homePanel.setBackground(new Color(232,139,103));
+
+        homeToMainButton.setBounds(110, 175, 180, 50);
+        homePanel.add(homeToMainButton);
+
+        try {
+            BufferedImage myPicture = ImageIO.read(new File("images/fridgey.png"));
+            JLabel picLabel = new JLabel(new ImageIcon(myPicture));
+            picLabel.setBounds(63, 60, 250, 100);
+            homePanel.add(picLabel);
+        } catch (IOException e) {
+            System.out.println("IOException caught");
+        }
+
+//        try {
+//            BufferedImage myPicture = ImageIO.read(new File("images/imageedit_3_4541337243.png"));
+//            JLabel picLabel = new JLabel(new ImageIcon(myPicture));
+//            picLabel.setBounds(-70, -200, 500, 800);
+//            homePanel.add(picLabel);
+//        } catch (IOException e) {
+//            System.out.println("IOException caught");
+//        }
+
+    }
+
+    // EFFECTS: sets the home screen
+    private void setMainPanel() {
+        mainPanel.setLayout(null);
+        mainPanel.setBackground(new Color(232,139,103));
 
         addButton.setBounds(-3, 400, 83, 75);
-        homePanel.add(addButton);
+        mainPanel.add(addButton);
 
         removeButton.setBounds(74, 400, 83, 75);
-        homePanel.add(removeButton);
+        mainPanel.add(removeButton);
 
         homeButton.setBounds(151, 400, 83, 75);
-        homePanel.add(homeButton);
+        mainPanel.add(homeButton);
 
         saveButton.setBounds(228, 400, 83, 75);
-        homePanel.add(saveButton);
+        mainPanel.add(saveButton);
 
         loadButton.setBounds(305, 400, 83, 75);
-        homePanel.add(loadButton);
+        mainPanel.add(loadButton);
 
         searchTextField.setBounds(90, 50, 200, 40);
-        homePanel.add(searchTextField);
+        mainPanel.add(searchTextField);
 
         searchText.setBounds(130, 23, 200, 40);
-        homePanel.add(searchText);
+        mainPanel.add(searchText);
 
         searchButton.setBounds(300, 55, 30,30);
-        homePanel.add(searchButton);
+        mainPanel.add(searchButton);
 
         searchItemInfoLabel.setBounds(44, 70, 400, 100);
-        homePanel.add(searchItemInfoLabel);
+        mainPanel.add(searchItemInfoLabel);
 
         displayItems.setBounds(40, 150, 300, 240);
         displayItems.setSelectedIndex(6);
-        homePanel.add(displayItems);
+        mainPanel.add(displayItems);
 
         todayDateText.setBounds(2, -2, 300, 30);
-        homePanel.add(todayDateText);
+        mainPanel.add(todayDateText);
 
         savedLabel.setBounds(340, 2, 50, 25);
-        homePanel.add(savedLabel);
+        mainPanel.add(savedLabel);
 
     }
 
     // EFFECTS: sets the add screen
     private void setAddPanel() {
         addPanel.setLayout(null);
-        addPanel.setBackground(new Color(245, 142, 53));
+        addPanel.setBackground(new Color(232,139,103));
 
         addingItemNameLabel.setBounds(30, 10, 100, 100);
         addingItemExpirationDateLabel.setBounds(30, 70, 200, 100);
@@ -182,6 +230,35 @@ public class FridgeyAppGUI {
 
     }
 
+    // EFFECTS: sets the remove screen
+    private void setRemovePanel() {
+        removePanel.setLayout(null);
+        removePanel.setBackground(new Color(232,139,103));
+
+        removePanelBackButton.setBounds(10,420, 90,30);
+        removePanel.add(removePanelBackButton);
+
+        removingItemHeaderLabel.setBounds(135, 100, 150, 30);
+        removePanel.add(removingItemHeaderLabel);
+
+        removingItemName.setBounds(120,130,150,30);
+        removePanel.add(removingItemName);
+
+        removingItemButton.setBounds(145,170, 100,40);
+        removePanel.add(removingItemButton);
+
+        removingItemErrorLabel.setBounds(130, 210, 150, 30);
+        removePanel.add(removingItemErrorLabel);
+
+        try {
+            BufferedImage myPicture = ImageIO.read(new File("images/itemRemoveTrashCanReal.png"));
+            JLabel picLabel = new JLabel(new ImageIcon(myPicture));
+            picLabel.setBounds(96, 220, 200, 200);
+            removePanel.add(picLabel);
+        } catch (IOException e) {
+            System.out.println("IOException caught");
+        }
+    }
 
     // EFFECTS: responsible for performing all the button actions
     private void actionPerformed() {
@@ -195,11 +272,18 @@ public class FridgeyAppGUI {
         removeButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                cl.show(panelCont, "2");
+                cl.show(panelCont, "3");
             }
         });
 
         backButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                cl.show(panelCont, "1");
+            }
+        });
+
+        removePanelBackButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 cl.show(panelCont, "1");
@@ -247,6 +331,23 @@ public class FridgeyAppGUI {
             }
         });
 
+        removingItemButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String name = removingItemName.getText().toLowerCase();
+                Item tempItem = items.searchItem(name);
+                items.removeItem(tempItem);
+                try {
+                    itemsDisplay.removeElement(tempItem.getItemNameWithExpirationDate());
+                    removingItemErrorLabel.setText(tempItem.getItemName() + " was removed");
+                    savedLabel.setText("");
+                    removingItemName.setText("");
+                } catch (NullPointerException exp) {
+                    removingItemErrorLabel.setText("Item was not found");
+                }
+            }
+        });
+
         loadButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -276,6 +377,20 @@ public class FridgeyAppGUI {
                 } catch (FileNotFoundException exception) {
                     savedLabel.setText("Unable to write to file");
                 }
+            }
+        });
+
+        homeButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                cl.show(panelCont, "4");
+            }
+        });
+
+        homeToMainButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                cl.show(panelCont, "1");
             }
         });
 
