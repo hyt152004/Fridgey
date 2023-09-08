@@ -29,20 +29,20 @@
 > - As a user, I want to be able to check the quantity of a certain item 
 > - As a user, I want to be view all the items 
 
-> **Instructions for Grader**
+> **Instructions**
 > - You can generate the first required action (adding) related to adding Xs to a Y by filling in the Name, Expiration Date, Quantity, and State text fields and pressing the "Add Item" button.
 > - You can generate the second required action (removing) related to adding Xs to a Y by filling in the Name and pressing the "Remove" button.
 > - You can locate my visual component from the application's background
 > - You can save the state of my application by pressing the "Save" button
 > - You can reload the state of my application by pressing the "Load" button
 
-> **Phase 4: Task 2**
+> **Actions**
 > - An Item has been added
 > - An Item has been searched and returned 
 > - An Item has been searched and returned  
 > - An Item has been removed
 
-> **Phase 4: Task 3**
+> **Reflection**
 > - After reflecting on my UML class diagram, implementing the Singleton Pattern crossed my mind. This procedure will ensure that only one instance of the Refrigerator class would be instantiated across the entire program
 and all objects would access the same single instance. By eliminating multiple instances and avoiding any possible inconsistencies of the Refrigerator state,
 it would simplify my program design and will reduce memory usage and, therefore, runtime.
