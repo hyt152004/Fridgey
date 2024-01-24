@@ -56,3 +56,15 @@ since the singleton object is shared across the entire program. Changing its sta
 [//]: # (> - As a user, when I start the application, I want to be given the option to retrieve my items from file.)
 
 ![poster](images/fridgey.png)
+
+<img width="452" alt="Screenshot 2024-01-24 at 10 43 38 AM" src="https://github.com/hyt152004/Fridgey/assets/111398735/c97edc32-9949-4c1f-b075-0947706348cd">
+<img width="423" alt="Screenshot 2024-01-24 at 10 43 51 AM" src="https://github.com/hyt152004/Fridgey/assets/111398735/c42a641a-9a4f-4f54-8367-31d099e69584">
+<img width="416" alt="Screenshot 2024-01-24 at 10 44 05 AM" src="https://github.com/hyt152004/Fridgey/assets/111398735/2d69aa04-4ddc-4135-8e6f-173d74c39af3">
+<img width="426" alt="Screenshot 2024-01-24 at 10 44 18 AM" src="https://github.com/hyt152004/Fridgey/assets/111398735/9bd4be79-4323-4d9a-b5d8-2fd4d69df34d">
+<img width="426" alt="Screenshot 2024-01-24 at 10 44 27 AM" src="https://github.com/hyt152004/Fridgey/assets/111398735/a31e676b-2e6f-4927-8f8f-1cbf4ee64d84">
+
+
+
+
+
+
